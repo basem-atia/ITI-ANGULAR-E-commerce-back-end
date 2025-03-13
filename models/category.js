@@ -9,10 +9,6 @@ const schema = {
     minLength: 3,
     maxLength: 20,
   },
-  image: {
-    type: String,
-    required: "Enter category image",
-  },
 };
 
 const Schema = new mongoose.Schema(schema);
