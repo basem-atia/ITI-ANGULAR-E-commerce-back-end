@@ -16,6 +16,19 @@ const getById = async (req, res) => {
     res.status(statusCode.badRequest).json({ message: error.message });
   }
 };
+const getByIds = async (req, res) => {
+  try {
+    const products = [];
+    const ids = req.body.ids;
+    for (var i = 0; i < ids.length; i++) {
+      const product = await Product.findById(ids[i]);
+      products.push(product);
+    }
+    res.status(statusCode.created).json({ data: products });
+  } catch (error) {
+    res.status(statusCode.badRequest).json({ message: error.message });
+  }
+};
 const getAllByCategoryId = async (req, res) => {
   try {
     const products = await Product.find()
@@ -34,4 +47,4 @@ const getAllByCategoryId = async (req, res) => {
   }
 };
 
-module.exports = { create, getAllByCategoryId, getById };
+module.exports = { create, getAllByCategoryId, getById, getByIds };
