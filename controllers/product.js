@@ -41,7 +41,7 @@ const getAllByCategoryId = async (req, res) => {
       })
       .select({ updatedAt: 0 });
     const data = products.filter((p) => p.subCategoryId);
-    // .sort((a, b) => a.name.localeCompare(b.name))
+    data.sort((a, b) => b.createdAt - a.createdAt);
     const _pagination = pagination(data.length, req.params.page);
     const prices = {
       min: Math.min(...products.map((p) => p.price)),
@@ -87,7 +87,23 @@ const getByFilter = async (req, res) => {
     if (filter.hasDiscount) products = products.filter((p) => p.discount > 0);
     if (filter.userMaxPrice)
       products = products.filter((p) => p.price <= filter.userMaxPrice);
+    if (filter.searchText) {
+      products = products.filter(
+        (p) =>
+          p.name.includes(filter.searchText) ||
+          p.description.includes(filter.searchText)
+      );
+    }
 
+    if (filter.sortedBy && filter.sortedBy == "Price") {
+      products.sort((a, b) => {
+        let x = a.discount ? a.price * (a.discount / 100) : a.price;
+        let y = b.discount ? b.price * (b.discount / 100) : b.price;
+        return x - y;
+      });
+    } else {
+      products.sort((a, b) => b.createdAt - a.createdAt);
+    }
     const _pagination = pagination(products.length, filter.page);
     const prices = {
       min: Math.min(...products.map((p) => p.price)),

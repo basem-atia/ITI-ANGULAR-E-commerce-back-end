@@ -1,16 +1,8 @@
-const userControllers = require("../controllers/userController");
+const userControllers = require("../controllers/account");
 const validationMW = require("../middlewares/userValidationMW");
 const verifyToken = require("../middlewares/verifyToken");
-const userRouter = require("express").Router();
-userRouter.get("/profile", verifyToken, userControllers.GetUserById);
-userRouter.put(
-  "/profile/changepassword",
-  verifyToken,
-  userControllers.changeUserPassword
-);
-userRouter.post(
-  "/profile/forgetPassword",
-  verifyToken,
-  userControllers.forgetPassword
-);
-module.exports = userRouter;
+const router = require("express").Router();
+router.get("/getUser", verifyToken, userControllers.GetUserById);
+router.put("/changepassword", verifyToken, userControllers.changeUserPassword);
+module.exports = router;
+
