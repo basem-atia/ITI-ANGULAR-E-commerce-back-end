@@ -24,7 +24,10 @@ const getAll = async (req, res) => {
           select: { _id: 1 },
         })
         .select({ updatedAt: 0 });
-      const someProducts = products.filter((p) => p.subCategoryId).slice(0, 4);
+      const someProducts = products
+        .filter((p) => p.subCategoryId)
+        .sort((a, b) => a.name.localeCompare(b.name))
+        .slice(0, 4);
       data.push({ ...categories[i]._doc, someProducts });
     }
     res.status(statusCode.ok).json({ data });

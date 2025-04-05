@@ -4,7 +4,7 @@ const schema = {
     type: String,
     unique: true,
     minLength: 3,
-    maxLength: 30,
+    maxLength: 50,
     required: "Enter product name",
   },
   discount: {
@@ -24,14 +24,11 @@ const schema = {
     type: String,
     minLength: 10,
   },
-  deliveryIsFree: {
-    type: Boolean,
-    default: false,
+  shipping: {
+    type: Number,
+    default: 0,
   },
-  isUsed: {
-    type: Boolean,
-    default: false,
-  },
+
   subCategoryId: {
     type: mongoose.Types.ObjectId,
     required: "Enter subCategoryId",
