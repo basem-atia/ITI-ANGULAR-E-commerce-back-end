@@ -8,15 +8,27 @@ const userSchema = new mongoose.Schema({
     match: [/^[a-zA-Z ]+$/, "Username can only contain letters"],
     trim: true,
   },
-  emailPhone: {
+  email: {
     type: String,
-    required: [true, "Email or phone number is required"],
+    unique: true,
+    sparse: true,
     match: [
-      /^(?:\+?[0-9]{11}|[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,})$/,
-      "Invalid email or phone number",
+      /^\+?[0-9]{11}|[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/,
+      "email must be as example@example.com",
     ],
     trim: true,
   },
+  phone: {
+    type: String,
+    unique: true,
+    sparse: true,
+    match: [
+      /^(010|011|012|015)\d{8}$/,
+      "phone must be 11 number and start with 011,012,010,015",
+    ],
+    trim: true,
+  },  
+
   password: {
     type: String,
     required: [true, "Password is required"],

@@ -3,22 +3,23 @@ const bcrypt = require("bcryptjs");
 
 const Register = async (req, res) => {
   try {
-    // console.log("Received data from frontend:", req.body);
-    // Catch user info from request
-    const { name, emailPhone, password, address } = req.body;
-    // Convert emailPhone to lowercase
-    const lowerEmailPhone = emailPhone.toLowerCase();
-    // Search for this user in db
+    const userData = req.body;
+    if (!userData.email || userData.email.trim() === "") {
+      userData.email = undefined;
+    }
+    if (!userData.phone || userData.phone.trim() === "") {
+      userData.phone = undefined;
+    }
+    const { name, email, phone, password, address } = req.body;
+    const lowerEmail = email?.toLowerCase();
     const foundUser = await userModel.findOne({
-      emailPhone: lowerEmailPhone,
+      email: lowerEmail,
     });
-    // Check if user already exists
     if (foundUser) {
       return res
         .status(200)
         .json({ message: "Already exists, Please log in..." });
     }
-    // Validate password before hashing
     const passwordRegex =
       /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/;
     if (!passwordRegex.test(password)) {
@@ -27,13 +28,12 @@ const Register = async (req, res) => {
           "Password must contain at least one uppercase letter, one lowercase letter, one digit, and one special character.",
       });
     }
-    // Hash password
     const salt = await bcrypt.genSalt(10);
     const hashedPassword = await bcrypt.hash(password, salt);
-    // Create new user with hashed password
     const newUser = new userModel({
       name,
-      emailPhone: lowerEmailPhone,
+      email: lowerEmail,
+      phone: phone,
       password: hashedPassword,
       address: address || "",
     });
