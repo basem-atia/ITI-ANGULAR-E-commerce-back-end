@@ -8,4 +8,5 @@ module.exports = {
   order_payment: require("./order_payment"),
   ordersSummary: require("./ordersSummary"),
   contact: require("./contact"),
+
 };

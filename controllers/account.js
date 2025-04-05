@@ -9,84 +9,7 @@ const { message } = require("../utils/validation/userValidation");
 const nodemailer = require("nodemailer");
 const dotenv = require("dotenv");
 dotenv.config();
-// async function getusers(req, res, next) {
-//   try {
-//     const users = await userModel.find({});
-//     res.status(200).json({
-//       users,
-//       message: "Users Retreived Successfully",
-//     });
-//   } catch (error) {
-//     return next(new ApiError(error.message, 500));
-//   }
-// }
-// async function createUser(req, res, next) {
-//   // console.log(req.body);
-//   try {
-//     let user = null;
-//     if (req.body.email) {
-//       user = await userModel.findOne({ email: req.body.email });
-//     }
-//     if (req.body.phone) {
-//       user = await userModel.findOne({ phone: req.body.phone });
-//     }
-//     if (user) {
-//       return next(new ApiError("Email or phone Already Exist", 400));
-//     }
-//     const created = new userModel(req.body);
-//     const createdUser = await created.save();
-//     // const tokenPayload = {
-//     //   username: createdUser.username,
-//     //   id: createdUser._id,
-//     //   loggedInAt: new Date().toISOString(),
-//     // };
-//     // const token = jwt.sign(tokenPayload, process.env.JWT_SECRET, {
-//     //   expiresIn: "1h",
-//     // });
-//     res.status(201).json({
-//       createdUser,
-//       // token,
-//       message: "User Created Successfully",
-//     });
-//   } catch (error) {
-//     return next(new ApiError(error.message, 400));
-//   }
-// }
-// async function login(req, res, next) {
-//   try {
-//     const body = req.body;
-//     let user = null;
-//     if (body.email) {
-//       user = await userModel.findOne({ email: body.email });
-//     }
-//     if (body.phone) {
-//       user = await userModel.findOne({ phone: body.phone });
-//     }
-//     if (!user) {
-//       return next(new ApiError("check your credentials", 401));
-//     }
-//     const isMatched = await bcrypt.compare(body.password, user.password);
-//     if (!isMatched) {
-//       return next(new ApiError("check your credentials", 401));
-//     }
-//     const tokenPayload = {
-//       username: user.username,
-//       id: user._id,
-//       loggedInAt: new Date().toISOString(),
-//     };
-//     console.log(process.env.JWT_SECRET);
 
-//     const token = jwt.sign(tokenPayload, process.env.JWT_SECRET, {
-//       expiresIn: "1h",
-//     });
-//     res.status(200).json({
-//       token,
-//       message: "logged in successfully",
-//     });
-//   } catch (error) {
-//     return next(new ApiError(error.message, 500));
-//   }
-// }
 async function GetUserById(req, res, next) {
   try {
     const id = req.userId;
@@ -142,7 +65,7 @@ async function changeUserPassword(req, res, next) {
       return next(new ApiError("Invalid email or phone format", 400));
     }
     const passwordRegex =
-      /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/;
+      /^(?=.[a-z])(?=.[A-Z])(?=.\d)(?=.[@$!%?&])[A-Za-z\d@$!%?&]{8,}$/;
     if (!passwordRegex.test(req.body.newPass?.trim())) {
       return res.status(400).json({
         message:
