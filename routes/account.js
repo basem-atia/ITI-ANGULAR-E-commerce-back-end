@@ -5,3 +5,4 @@ const router = require("express").Router();
 router.get("/getUser", verifyToken, userControllers.GetUserById);
 router.put("/changepassword", verifyToken, userControllers.changeUserPassword);
 module.exports = router;
+

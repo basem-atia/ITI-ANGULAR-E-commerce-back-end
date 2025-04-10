@@ -7,6 +7,7 @@ const resetPasswordSchema = new mongoose.Schema({
   phone: {
     type: String,
     required: false,
+
   },
   resetToken: {
     type: String,
@@ -19,3 +20,4 @@ const resetPasswordSchema = new mongoose.Schema({
   },
 });
 module.exports = mongoose.model("ResetPassword", resetPasswordSchema);
+

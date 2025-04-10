@@ -32,7 +32,8 @@ const LogIn = async (req, res) => {
     // Create JWT and send in header to front
     const dataJWT = await jwt.sign(
       { id: foundUser._id, email: foundUser.email },
-      process.env.JWT_SECRET
+      process.env.JWT_SECRET,
+      { expiresIn: "3m" }
     );
     // Send JWT in response
     return res.status(200).json({
