@@ -20,6 +20,8 @@ const transport = nodemailer.createTransport({
 
 async function forgetPassword(req, res, next) {
   let id = req.userId;
+  console.log(id);
+
   if (!mongoose.Types.ObjectId.isValid(String(id))) {
     return next(new ApiError("Invalid user ID format", 400));
   }

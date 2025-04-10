@@ -7,4 +7,5 @@ module.exports = {
   order: require("./order"),
   payment: require("./payment"),
   contact: require("./contact"),
+  user: require("./User"),
 };

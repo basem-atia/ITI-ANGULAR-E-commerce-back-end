@@ -27,7 +27,7 @@ const getAll = async (req, res) => {
       const someProducts = products
         .filter((p) => p.subCategoryId)
         .sort((a, b) => a.name.localeCompare(b.name))
-        .slice(0, 4);
+        .slice(0, 3);
       data.push({ ...categories[i]._doc, someProducts });
     }
     res.status(statusCode.ok).json({ data });

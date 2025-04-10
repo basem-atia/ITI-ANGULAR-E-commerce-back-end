@@ -19,7 +19,8 @@ app.use("/api/login", routers.login);
 app.use("/api/profile/password", routers.password);
 app.use("/api/profile", routers.account);
 app.use("/api/payment", routers.order_payment);
-app.use("/contact", routers.contact);
+app.use("/api/contact", routers.contact);
+app.use("/api/ordersSummary", routers.ordersSummary);
 app.use((err, req, res, next) => {
   return res.status(err.statusCode || 500).json({ error: err.message });
 });
