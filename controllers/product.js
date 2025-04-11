@@ -90,17 +90,13 @@ const getByFilter = async (req, res) => {
     if (filter.searchText) {
       products = products.filter(
         (p) =>
-          p.name.includes(filter.searchText) ||
-          p.description.includes(filter.searchText)
+          p.name.toLowerCase().includes(filter.searchText.toLowerCase()) ||
+          p.description.toLowerCase().includes(filter.searchText.toLowerCase())
       );
     }
 
     if (filter.sortedBy && filter.sortedBy == "Price") {
-      products.sort((a, b) => {
-        let x = a.discount ? a.price * (a.discount / 100) : a.price;
-        let y = b.discount ? b.price * (b.discount / 100) : b.price;
-        return x - y;
-      });
+      products.sort((a, b) => a.price - b.price);
     } else {
       products.sort((a, b) => b.createdAt - a.createdAt);
     }
