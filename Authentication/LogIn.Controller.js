@@ -33,7 +33,7 @@ const LogIn = async (req, res) => {
     const dataJWT = await jwt.sign(
       { id: foundUser._id, email: foundUser.email },
       process.env.JWT_SECRET,
-      { expiresIn: "3m" }
+      { expiresIn: "1h" }
     );
     // Send JWT in response
     return res.status(200).json({
